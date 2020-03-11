@@ -60,11 +60,29 @@ function checkWin() {
 }
 
 function win(player) {
-    console.log("Player " + player + " has won")
     swal({
         title: player + " wins!",
         text: "Would you like to play again?",
         icon: "success",
+        buttons: ["No", "Yes"]
+    }).then ((choice) => {
+        if (!choice) { // NO
+            // noinspection SillyAssignmentJS
+            document.body.outerHTML = document.body.outerHTML // Disallow further moves by removing EventListeners
+        } else {
+            for (const item of grid) {
+                item.innerHTML = ""
+            }
+            turnsPlayed = 0
+        }
+    })
+}
+
+function draw() {
+    swal({
+        title: "Draw!",
+        text: "Would you like to play again?",
+        icon: "info",
         buttons: ["No", "Yes"]
     }).then ((choice) => {
         if (!choice) { // NO
