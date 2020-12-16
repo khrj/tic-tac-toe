@@ -33,7 +33,7 @@ export default function Board() {
     }
 
     return (
-        <div className="board">
+        <div className="grid grid-rows-3 grid-cols-3 h-full w-full border-2 border-solid border-gray-400">
             {renderSquare(0)}
             {renderSquare(1)}
             {renderSquare(2)}
