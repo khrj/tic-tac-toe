@@ -9,7 +9,8 @@ To get a hang of new frameworks and languages I learn, I re-write this. Here's a
 - C++ (CLI - Source in git history)
 - Vanilla JavaScript (GUI - Source in git history)
 - ReactJS (GUI - Source in git history)
-- Next.js (GUI - Source on main)
+- Next.js (GUI - Source in git history)
+- Next.js + TypeScript (GUI - Source on main)
 
 ## Development
 

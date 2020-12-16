@@ -1,13 +1,14 @@
-import { useState } from 'react'
-import Square from './square.js'
+import { Dispatch, SetStateAction, useState } from 'react'
+import Square from './square'
 import swal from 'sweetalert'
+import { value } from './types'
 
 export default function Board() {
-    let [squares, setSquares] = useState([null, null, null, null, null, null, null, null, null])
+    let [squares, setSquares]: [squares: value[], setSquares: Dispatch<SetStateAction<any[]>>] = useState(Array(9).fill(value.null))
     let [xIsNext, setXIsNext] = useState(true)
 
     const winner = calculateWinner(squares)
-    if (winner) {
+    if (winner !== value.null) {
         swal({
             title: winner + " wins!",
             text: "Would you like to play again?",
@@ -15,10 +16,10 @@ export default function Board() {
             buttons: ["No", "Yes"]
         }).then((choice) => {
             if (choice) {
-                setSquares([null, null, null, null, null, null, null, null, null])
+                setSquares(Array(9).fill(value.null))
             }
         })
-    } else if (squares.filter(e => e).length >= 9) {
+    } else if (squares.filter(e => e !== value.null).length >= 9) {
         swal({
             title: "Draw!",
             text: "Would you like to play again?",
@@ -26,7 +27,7 @@ export default function Board() {
             buttons: ["No", "Yes"]
         }).then((choice) => {
             if (choice) {
-                setSquares([null, null, null, null, null, null, null, null, null])
+                setSquares(Array(9).fill(value.null))
             }
         })
     }
@@ -46,17 +47,18 @@ export default function Board() {
     )
 
 
-    function handleClick(i) {
+    function handleClick(i: number) {
         const currentSquares = squares.slice()
-        if (calculateWinner(currentSquares) || currentSquares[i]) {
+        if (calculateWinner(currentSquares) !== value.null || currentSquares[i] !== value.null) {
+            console.log(currentSquares[i])
             return
         }
-        currentSquares[i] = xIsNext ? 'X' : 'O'
+        currentSquares[i] = xIsNext ? value.X : value.O
         setSquares(currentSquares)
         setXIsNext(!xIsNext)
     }
 
-    function renderSquare(i) {
+    function renderSquare(i: number) {
         return (
             <Square
                 value={squares[i]}
@@ -67,7 +69,7 @@ export default function Board() {
 }
 
 
-function calculateWinner(squares) {
+function calculateWinner(squares: value[]) {
     const winningPatterns = [
         [0, 1, 2],
         [3, 4, 5],
@@ -84,5 +86,5 @@ function calculateWinner(squares) {
             return squares[a]
         }
     }
-    return null
+    return value.null
 }
