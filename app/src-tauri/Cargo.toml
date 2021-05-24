@@ -1,0 +1,24 @@
+[package]
+name = "tic_tac_toe"
+version = "0.1.0"
+description = "Simple TicTacToe app written using Tauri"
+authors = ["khushraj.rathod@gmail.com"]
+license = "GPL-3.0"
+default-run = "tic_tac_toe"
+repository = "https://github.com/KhushrajRathod/TicTacToe"
+edition = "2018"
+build = "src/build.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1.0.0-beta.0" }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+tauri = { version = "1.0.0-beta.1", features = ["api-all"] }
+
+[features]
+default = [ "custom-protocol" ]
+custom-protocol = [ "tauri/custom-protocol" ]
