@@ -46,19 +46,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y webkit2gtk-4.0
 
-      - name: Test Backend
-        run: cargo test
-        working-directory: ./app/src-tauri
+      - name: Build Frontend
+        run: pnpm i && pnpm build
+        working-directory: ./app/src-ui
 
       - name: Lint Backend
         uses: actions-rs/clippy-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --manifest-path ./app/src-tauri/Cargo.toml
-
-      - name: Build Frontend
-        run: pnpm i && pnpm build
-        working-directory: ./app/src-ui
 
       - uses: tauri-apps/tauri-action@v0
         env:
