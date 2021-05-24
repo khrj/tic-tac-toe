@@ -1,11 +1,13 @@
 # Tic-Tac-Toe
+
 Ever-evolving TicTacToe game in Next.js (at the moment)
 
 ## History
+
 To get a hang of new frameworks and languages I learn, I re-write this. Here's a list of what this has been in:
 
 | Order | Languages / Tools                  | Type | Source location |
-|-------|------------------------------------|------|-----------------|
+| ----- | ---------------------------------- | ---- | --------------- |
 | 1     | Java                               | CLI  | Unavailable     |
 | 2     | Python                             | CLI  | Unavailable     |
 | 3     | C++                                | CLI  | Git history     |

@@ -1,10 +1,12 @@
-import { Dispatch, SetStateAction, useState } from 'react'
-import Square from './square'
-import swal from 'sweetalert'
-import { value } from './types'
+import { Dispatch, SetStateAction, useState } from "react"
+import swal from "sweetalert"
+import Square from "./square"
+import { value } from "./types"
 
 export default function Board() {
-    let [squares, setSquares]: [squares: value[], setSquares: Dispatch<SetStateAction<any[]>>] = useState(Array(9).fill(value.null))
+    let [squares, setSquares]: [squares: value[], setSquares: Dispatch<SetStateAction<any[]>>] = useState(
+        Array(9).fill(value.null),
+    )
     let [xIsNext, setXIsNext] = useState(true)
 
     const winner = calculateWinner(squares)
@@ -13,7 +15,7 @@ export default function Board() {
             title: winner + " wins!",
             text: "Would you like to play again?",
             icon: "success",
-            buttons: ["No", "Yes"]
+            buttons: ["No", "Yes"],
         }).then((choice) => {
             if (choice) {
                 setSquares(Array(9).fill(value.null))
@@ -24,7 +26,7 @@ export default function Board() {
             title: "Draw!",
             text: "Would you like to play again?",
             icon: "info",
-            buttons: ["No", "Yes"]
+            buttons: ["No", "Yes"],
         }).then((choice) => {
             if (choice) {
                 setSquares(Array(9).fill(value.null))
@@ -46,7 +48,6 @@ export default function Board() {
         </div>
     )
 
-
     function handleClick(i: number) {
         const currentSquares = squares.slice()
         if (calculateWinner(currentSquares) !== value.null || currentSquares[i] !== value.null) {
@@ -67,7 +68,6 @@ export default function Board() {
         )
     }
 }
-
 
 function calculateWinner(squares: value[]) {
     const winningPatterns = [

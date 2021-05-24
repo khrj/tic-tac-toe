@@ -1,6 +1,6 @@
-import Head from 'next/head'
-import Game from '../components/game'
-import GitHub from '../components/github-promo'
+import Head from "next/head"
+import Game from "../components/game"
+import GitHub from "../components/github-promo"
 
 export default function Home() {
     return (

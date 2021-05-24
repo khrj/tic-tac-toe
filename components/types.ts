@@ -1,5 +1,5 @@
 export enum value {
-    X = 'X',
-    O = 'O',
-    null = 'null'
+    X = "X",
+    O = "O",
+    null = "null",
 }
