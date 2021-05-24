@@ -1,0 +1,71 @@
+name: Prerelease
+
+on:
+  push:
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache Frontend
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-pnpm-modules
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+
+      - name: Cache Backend
+        uses: Swatinem/rust-cache@v1.2.0
+        with:
+          working-directory: ./app/src-tauri
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.0.2
+
+      - name: Test Backend
+        run: cargo test
+        working-directory: ./app/src-tauri
+
+      - name: Lint Backend
+        uses: actions-rs/clippy-check@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --manifest-path ./app/src-tauri/Cargo.toml
+
+      - name: Install webkit2gtk (ubuntu only)
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y webkit2gtk-4.0
+
+      - name: Build Frontend
+        run: pnpm i && pnpm build
+        working-directory: ./app/src-ui
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: TicTacToe-v__VERSION__-dev # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: "TicTacToe v__VERSION__-dev"
+          body: "This is a development build and may be unstable."
+          draft: false
+          prerelease: true
+          projectPath: ./app/
