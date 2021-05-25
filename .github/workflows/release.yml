@@ -1,9 +1,6 @@
 name: Release
 
-on:
-  push:
-    tags:
-      - "*"
+on: ['push', 'pull_request']
 
 env:
   CARGO_TERM_COLOR: always
@@ -14,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        platform: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
       - name: Checkout code
