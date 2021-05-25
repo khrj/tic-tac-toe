@@ -1,6 +1,6 @@
 name: Release
 
-on: ['push', 'pull_request']
+on: ["push", "pull_request"]
 
 env:
   CARGO_TERM_COLOR: always
@@ -17,7 +17,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Cache Frontend
+      - name: Cache pnpm
         uses: actions/cache@v2
         env:
           cache-name: cache-pnpm-modules
@@ -27,7 +27,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
 
-      - name: Cache Backend
+      - name: Cache tauri
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-cargo-tauri
+        with:
+          path: ~/.cargo/bin/
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}
+
+      - name: Cache backend
         uses: Swatinem/rust-cache@v1.2.0
         with:
           working-directory: ./app/src-tauri
@@ -46,36 +56,34 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y webkit2gtk-4.0
 
-      - name: Build Frontend
+      - name: Build frontend
         run: pnpm i && pnpm build
         working-directory: ./app/src-ui
 
-      - name: Lint Backend
+      - name: Build backend
+        run: cargo tauri build
+        working-directory: ./app/
+
+      - name: Lint backend
         uses: actions-rs/clippy-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --manifest-path ./app/src-tauri/Cargo.toml
 
-      - name: Build Tauri
-        run: cargo tauri build
-        working-directory: ./app/
-
       - name: Prerelease
-        uses: softprops/action-gh-release@v1
+        uses: "marvinpinto/action-automatic-releases@latest"
         if: "!startsWith(github.ref, 'refs/tags/')"
         with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "Prerelease"
+          prerelease: true
+          title: "Development Build - May be unstable"
           files: ./app/src-tauri/target/release/bundle/**/TicTacToe*.*
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: "marvinpinto/action-automatic-releases@latest"
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ./app/src-tauri/target/release/bundle/**/TicTacToe*.*
-          draft: false
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          files: ./app/src-tauri/target/release/bundle/**/TicTacToe*.*
