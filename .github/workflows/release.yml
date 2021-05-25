@@ -86,4 +86,7 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          files: ./app/src-tauri/target/release/bundle/**/TicTacToe*.*
+          files: |
+            ./app/src-tauri/target/release/bundle/**/TicTacToe*.dmg
+            ./app/src-tauri/target/release/bundle/**/TicTacToe*.msi
+            ./app/src-tauri/target/release/bundle/**/TicTacToe*.dmgas
