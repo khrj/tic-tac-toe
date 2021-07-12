@@ -1,6 +1,6 @@
 {
     "package": {
-        "productName": "TicTacToe",
+        "productName": "tic-tac-toe",
         "version": "0.1.0"
     },
     "build": {
@@ -53,7 +53,7 @@
         },
         "windows": [
             {
-                "title": "TicTacToe",
+                "title": "Tic Tac Toe",
                 "width": 800,
                 "height": 600,
                 "resizable": true,

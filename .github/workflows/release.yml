@@ -78,7 +78,7 @@ jobs:
           automatic_release_tag: "Prerelease"
           prerelease: true
           title: "Development Build - May be unstable"
-          files: ./app/src-tauri/target/release/bundle/**/TicTacToe*.*
+          files: ./app/src-tauri/target/release/bundle/**/tic-tac-toe*.*
 
       - name: Release
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -87,6 +87,6 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: |
-            ./app/src-tauri/target/release/bundle/**/TicTacToe*.dmg
-            ./app/src-tauri/target/release/bundle/**/TicTacToe*.msi
-            ./app/src-tauri/target/release/bundle/**/TicTacToe*.dmgas
+            ./app/src-tauri/target/release/bundle/**/tic-tac-toe*.dmg
+            ./app/src-tauri/target/release/bundle/**/tic-tac-toe*.msi
+            ./app/src-tauri/target/release/bundle/**/tic-tac-toe*.dmgas

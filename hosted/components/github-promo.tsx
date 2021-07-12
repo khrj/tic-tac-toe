@@ -3,7 +3,7 @@ import styles from "../styles/github.module.css"
 export default function GitHub() {
     return (
         <a
-            href="https://github.com/KhushrajRathod/TicTacToe/"
+            href="https://github.com/khrj/tic-tac-toe/"
             className={styles.githubCorner}
             aria-label="View source on GitHub"
         >

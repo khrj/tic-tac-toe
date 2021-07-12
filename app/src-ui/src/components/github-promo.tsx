@@ -7,7 +7,7 @@ export default function GitHub() {
             className={styles.githubCorner}
             aria-label="View source on GitHub"
             onClick={() => {
-                shell.open("https://github.com/KhushrajRathod/TicTacToe/")
+                shell.open("https://github.com/khrj/tic-tac-toe/")
             }}
         >
             <svg

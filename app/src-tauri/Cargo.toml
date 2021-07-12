@@ -1,11 +1,11 @@
 [package]
 name = "tic_tac_toe"
 version = "0.1.0"
-description = "Simple TicTacToe app written using Tauri"
+description = "Simple tic-tac-toe app written using Tauri"
 authors = ["khushraj.rathod@gmail.com"]
 license = "GPL-3.0"
 default-run = "tic_tac_toe"
-repository = "https://github.com/KhushrajRathod/TicTacToe"
+repository = "https://github.com/khrj/tic-tac-toe"
 edition = "2018"
 build = "src/build.rs"
 
@@ -20,5 +20,5 @@ serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "1.0.0-beta.1", features = ["api-all"] }
 
 [features]
-default = [ "custom-protocol" ]
-custom-protocol = [ "tauri/custom-protocol" ]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
