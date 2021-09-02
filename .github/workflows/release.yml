@@ -38,7 +38,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}
 
       - name: Cache backend
-        uses: Swatinem/rust-cache@v1.2.0
+        uses: Swatinem/rust-cache@v1.3.0
         with:
           working-directory: ./app/src-tauri
 
